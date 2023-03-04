@@ -56,7 +56,7 @@ import { deferredPromise, getPlatform } from './lib/util';
 /* eslint-enable import/first */
 
 /* eslint-disable import/order */
-///: BEGIN:ONLY_INCLUDE_IN(flask)
+///: BEGIN:ONLY_INCLUDE_IN(desktop)
 import {
   CONNECTION_TYPE_EXTERNAL,
   CONNECTION_TYPE_INTERNAL,
@@ -264,7 +264,7 @@ async function initialize() {
     const initState = await loadStateFromPersistence();
     const initLangCode = await getFirstPreferredLangCode();
 
-    ///: BEGIN:ONLY_INCLUDE_IN(flask)
+    ///: BEGIN:ONLY_INCLUDE_IN(desktop)
     await DesktopManager.init(platform.getVersion());
     ///: END:ONLY_INCLUDE_IN
 
