@@ -3,7 +3,8 @@ const { readFile } = require('fs/promises');
 const fs = require('fs');
 const ini = require('ini');
 const yaml = require('js-yaml');
-const { BuildType, loadBuildTypesConfig } = require('../lib/build-type');
+const { loadBuildTypesConfig } = require('../lib/build-type');
+const { union } = require('lodash');
 
 const commonConfigurationPropertyNames = ['PUBNUB_PUB_KEY', 'PUBNUB_SUB_KEY'];
 
@@ -105,7 +106,10 @@ async function getProductionConfig(buildType) {
 
   const buildTypes = loadBuildTypesConfig();
 
-  const requiredEnvironmentVariables = buildTypes.builds[buildType].env ?? [];
+  const requiredEnvironmentVariables = union(
+    buildTypes.env,
+    buildTypes.builds[buildType].env ?? [],
+  );
 
   for (const required of requiredEnvironmentVariables) {
     if (!prodConfig[required]) {
