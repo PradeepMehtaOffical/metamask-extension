@@ -57,7 +57,16 @@
       "priorityFeeTrend": "down",
       "networkCongestion": 0.90625
     },
-    "snaps": [{}],
+    "snaps": [
+      {
+        "npm:@metamask/test-snap-bip44": {
+          "name": "@metamask/test-snap-bip44",
+          "origin": "npm:@metamask/test-snap-bip44",
+          "version": "5.1.2",
+          "iconUrl": null
+        }
+      }
+    ],
     "preferences": {
       "hideZeroBalanceTokens": false,
       "showFiatInTestnets": false,

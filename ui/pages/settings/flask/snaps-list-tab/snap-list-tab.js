@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SnapSettingsCard from '../../../../components/app/flask/snap-settings-card';
 import { useI18nContext } from '../../../../hooks/useI18nContext';
@@ -13,7 +13,6 @@ import {
 } from '../../../../helpers/constants/design-system';
 import Box from '../../../../components/ui/box';
 import { SNAPS_VIEW_ROUTE } from '../../../../helpers/constants/routes';
-import { disableSnap, enableSnap } from '../../../../store/actions';
 import { getSnaps } from '../../../../selectors';
 import { handleSettingsRefs } from '../../../../helpers/utils/settings-search';
 import {
@@ -27,22 +26,15 @@ import {
   ButtonLink,
   Text,
 } from '../../../../components/component-library';
+import { removeSnapIdPrefix } from '../../../../helpers/utils/util';
 
 const SnapListTab = () => {
   const t = useI18nContext();
   const history = useHistory();
-  const dispatch = useDispatch();
   const snaps = useSelector(getSnaps);
   const settingsRef = useRef();
   const onClick = (snap) => {
     history.push(`${SNAPS_VIEW_ROUTE}/${encodeURIComponent(snap.id)}`);
-  };
-  const onToggle = (snap) => {
-    if (snap.enabled) {
-      dispatch(disableSnap(snap.id));
-    } else {
-      dispatch(enableSnap(snap.id));
-    }
   };
 
   useEffect(() => {
@@ -58,19 +50,13 @@ const SnapListTab = () => {
               return (
                 <SnapSettingsCard
                   className="snap-settings-card"
-                  isEnabled={snap.enabled}
                   key={key}
-                  onToggle={() => {
-                    onToggle(snap);
-                  }}
-                  description={snap.manifest.description}
-                  url={snap.id}
+                  packageName={removeSnapIdPrefix(snap.id)}
                   name={snap.manifest.proposedName}
-                  status={snap.status}
-                  version={snap.version}
                   onClick={() => {
                     onClick(snap);
                   }}
+                  snapId={snap.id}
                 />
               );
             })}

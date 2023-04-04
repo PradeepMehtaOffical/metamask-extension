@@ -52,7 +52,7 @@ const SnapAvatar = ({ snapId, className }) => {
       position={BadgeWrapperPosition.bottomRight}
     >
       {iconUrl ? (
-        <AvatarFavicon size={Size.LG} src={iconUrl} />
+        <AvatarFavicon size={Size.LG} src={iconUrl} name={friendlyName} />
       ) : (
         <AvatarBase
           size={Size.LG}
