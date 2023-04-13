@@ -417,6 +417,11 @@ export default class MetamaskController extends EventEmitter {
           this.assetsContractController.getERC1155TokenURI.bind(
             this.assetsContractController,
           ),
+
+        getTokenStandardAndDetails:
+          this.assetsContractController.getTokenStandardAndDetails.bind(
+            this.assetsContractController,
+          ),
         onNftAdded: ({ address, symbol, tokenId, standard, source }) =>
           this.metaMetricsController.trackEvent({
             event: MetaMetricsEventName.NftAdded,
@@ -668,8 +673,8 @@ export default class MetamaskController extends EventEmitter {
       onboardingController: this.onboardingController,
       initState:
         isManifestV3 &&
-        isFirstMetaMaskControllerSetup === false &&
-        initState.AccountTracker?.accounts
+          isFirstMetaMaskControllerSetup === false &&
+          initState.AccountTracker?.accounts
           ? { accounts: initState.AccountTracker.accounts }
           : { accounts: {} },
     });
@@ -703,6 +708,10 @@ export default class MetamaskController extends EventEmitter {
     });
 
     this.tokensController.hub.on('pendingSuggestedAsset', async () => {
+      await opts.openPopup();
+    });
+
+    this.nftController.hub.on('pendingSuggestedNft', async () => {
       await opts.openPopup();
     });
 
@@ -1619,10 +1628,10 @@ export default class MetamaskController extends EventEmitter {
           params:
             newAccounts.length < 2
               ? // If the length is 1 or 0, the accounts are sorted by definition.
-                newAccounts
+              newAccounts
               : // If the length is 2 or greater, we have to execute
-                // `eth_accounts` vi this method.
-                await this.getPermittedAccounts(origin),
+              // `eth_accounts` vi this method.
+              await this.getPermittedAccounts(origin),
         });
       }
 
@@ -1970,9 +1979,9 @@ export default class MetamaskController extends EventEmitter {
       ),
       addToken: tokensController.addToken.bind(tokensController),
       rejectWatchAsset:
-        tokensController.rejectWatchAsset.bind(tokensController),
+        this.rejectWatchAssetRequest.bind(this),
       acceptWatchAsset:
-        tokensController.acceptWatchAsset.bind(tokensController),
+        this.acceptWatchAssetRequest.bind(this),
       updateTokenType: tokensController.updateTokenType.bind(tokensController),
       setAccountLabel: preferencesController.setAccountLabel.bind(
         preferencesController,
@@ -2598,7 +2607,7 @@ export default class MetamaskController extends EventEmitter {
     const isTokenDetectionInactiveInMainnet =
       !useTokenDetection &&
       this.networkController.store.getState().provider.chainId ===
-        CHAIN_IDS.MAINNET;
+      CHAIN_IDS.MAINNET;
 
     const { networkConfigurations } = this.networkController.store.getState();
 
@@ -2994,9 +3003,8 @@ export default class MetamaskController extends EventEmitter {
    */
 
   getAccountLabel(name, index, hdPathDescription) {
-    return `${name[0].toUpperCase()}${name.slice(1)} ${
-      parseInt(index, 10) + 1
-    } ${hdPathDescription || ''}`.trim();
+    return `${name[0].toUpperCase()}${name.slice(1)} ${parseInt(index, 10) + 1
+      } ${hdPathDescription || ''}`.trim();
   }
 
   /**
@@ -3420,13 +3428,41 @@ export default class MetamaskController extends EventEmitter {
         return this.tokensController.watchAsset(asset, type);
       case 'ERC721':
       case 'ERC1155':
-        // TODO
-        break;
+        return this.nftController.watchNft(asset, type);
       default:
         throw new Error(`Asset type ${type} not supported`);
     }
-    return Promise.resolve();
   };
+
+  acceptWatchAssetRequest = (id) => {
+    const suggestedToken = this.tokensController.state.suggestedAssets.find(
+      (asset) => asset.id === id,
+    );
+    const suggestedNft = this.nftController.state.suggestedNfts.find(
+      (asset) => asset.id === id,
+    );
+    if (suggestedToken) {
+      return this.tokensController.acceptWatchAssetRequest(id);
+    }
+    if (suggestedNft) {
+      return this.nftController.acceptWatchNft(id);
+    }
+  }
+
+  rejectWatchAssetRequest = (id) => {
+    const suggestedToken = this.tokensController.state.suggestedAssets.find(
+      (asset) => asset.id === id,
+    );
+    const suggestedNft = this.nftController.state.suggestedNfts.find(
+      (asset) => asset.id === id,
+    );
+    if (suggestedToken) {
+      return this.tokensController.rejectWatchAsset(id);
+    }
+    if (suggestedNft) {
+      return this.nftController.rejectWatchNft(id);
+    }
+  }
 
   //=============================================================================
   // PASSWORD MANAGEMENT

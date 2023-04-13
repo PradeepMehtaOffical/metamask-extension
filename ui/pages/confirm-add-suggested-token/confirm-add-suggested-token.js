@@ -12,8 +12,8 @@ import { getMostRecentOverviewPage } from '../../ducks/history/history';
 import { getTokens } from '../../ducks/metamask/metamask';
 import ZENDESK_URLS from '../../helpers/constants/zendesk-url';
 import { isEqualCaseInsensitive } from '../../../shared/modules/string-utils';
-import { getSuggestedAssets } from '../../selectors';
-import { rejectWatchAsset, acceptWatchAsset } from '../../store/actions';
+import { getSuggestedAssets, getSuggestedNfts } from '../../selectors';
+import { rejectWatchAsset, acceptWatchAsset, } from '../../store/actions';
 import {
   MetaMetricsEventCategory,
   MetaMetricsEventName,
@@ -73,6 +73,7 @@ const ConfirmAddSuggestedToken = () => {
 
   const mostRecentOverviewPage = useSelector(getMostRecentOverviewPage);
   const suggestedAssets = useSelector(getSuggestedAssets);
+  const suggestedNfts = useSelector(getSuggestedNfts);
   const tokens = useSelector(getTokens);
 
   const trackEvent = useContext(MetaMetricsContext);
@@ -118,7 +119,7 @@ const ConfirmAddSuggestedToken = () => {
 
   const handleAddTokensClick = useCallback(async () => {
     await Promise.all(
-      suggestedAssets.map(async ({ asset, id }) => {
+      [...suggestedAssets, ...suggestedNfts].map(async ({ asset, id }) => {
         await dispatch(acceptWatchAsset(id));
 
         trackEvent({
@@ -141,7 +142,7 @@ const ConfirmAddSuggestedToken = () => {
   }, [dispatch, history, trackEvent, mostRecentOverviewPage, suggestedAssets]);
 
   const goBackIfNoSuggestedAssetsOnFirstRender = () => {
-    if (!suggestedAssets.length) {
+    if (!suggestedAssets.length && !suggestedNfts.length) {
       history.push(mostRecentOverviewPage);
     }
   };
@@ -150,6 +151,83 @@ const ConfirmAddSuggestedToken = () => {
     goBackIfNoSuggestedAssetsOnFirstRender();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const showNftConfirmation = suggestedNfts.length > 0;
+
+  if (showNftConfirmation) {
+    return (
+      <div className="page-container">
+        <div className="page-container__header">
+          <div className="page-container__title">{t('addSuggestedTokens')}</div>
+          <div className="page-container__subtitle">
+            {t('likeToImportTokens')}
+          </div>
+          {knownTokenActionableMessage}
+          {reusedTokenNameActionableMessage}
+        </div>
+        <div className="page-container__content">
+          <div className="confirm-add-suggested-token">
+            <div className="confirm-add-suggested-token__header">
+              <div className="confirm-add-suggested-token__nft">{t('nft')}</div>
+              <div className="confirm-add-suggested-token__details">
+                {t('details')}
+              </div>
+            </div>
+            <div className="confirm-add-suggested-token__nft-list">
+              {suggestedNfts.map(({ asset }) => {
+                return (
+                  <div
+                    className="confirm-add-suggested-token__nft-list-item"
+                    key={`${asset.address}-${asset.tokenId}`}
+                  >
+                    {asset.image && (
+                      <img
+                        className="confirm-add-suggested-token__nft-image"
+                        src={asset.image}
+                        alt={asset.name || asset.tokenId}
+                      />
+                    )}
+                    <div className="confirm-add-suggested-token__nft-details">
+                      {asset.name && (
+                        <div className="confirm-add-suggested-token__nft-name">
+                          {asset.name}
+                        </div>
+                      )}
+                      <div className="confirm-add-suggested-token__nft-address-tokenId">
+                        {asset.address} - {asset.tokenId}
+                      </div>
+                      {asset.description && (
+                        <div className="confirm-add-suggested-token__nft-description">
+                          {asset.description}
+                        </div>
+                      )}
+                      {asset.standard && (
+                        <div className="confirm-add-suggested-token__nft-standard">
+                          {asset.standard}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <PageContainerFooter
+          cancelText={t('cancel')}
+          submitText={t('addNft')}
+          onCancel={async () => {
+            await Promise.all(
+              suggestedNfts.map(({ id }) => dispatch(rejectWatchAsset(id))),
+            );
+            history.push(mostRecentOverviewPage);
+          }}
+          onSubmit={handleAddTokensClick}
+          disabled={suggestedNfts.length === 0}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="page-container">
