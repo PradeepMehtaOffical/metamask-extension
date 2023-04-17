@@ -180,7 +180,7 @@ const ConfirmAddSuggestedToken = () => {
             </div>
             <div className="confirm-add-suggested-token__nft-list">
               {suggestedNfts.map(
-                ({ address, tokenId, symbol, image, name, id }) => {
+                ({ asset: { address, tokenId, symbol, image, name, id } }) => {
                   return (
                     <div
                       className="confirm-add-suggested-token__nft-list-item"

@@ -189,6 +189,9 @@
   "addAlias": {
     "message": "Add alias"
   },
+  "addAllNfts": {
+    "message": "Add all NFTs"
+  },
   "addBlockExplorer": {
     "message": "Add a block explorer"
   },
@@ -277,9 +280,6 @@
   },
   "addToken": {
     "message": "Add token"
-  },
-  "addAllNfts": {
-    "message": "Add all NFTs"
   },
   "addingCustomNetwork": {
     "message": "Adding Network"
