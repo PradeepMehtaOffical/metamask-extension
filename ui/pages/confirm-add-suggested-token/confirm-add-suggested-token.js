@@ -13,7 +13,7 @@ import { getTokens } from '../../ducks/metamask/metamask';
 import ZENDESK_URLS from '../../helpers/constants/zendesk-url';
 import { isEqualCaseInsensitive } from '../../../shared/modules/string-utils';
 import { getSuggestedAssets, getSuggestedNfts } from '../../selectors';
-import { rejectWatchAsset, acceptWatchAsset, } from '../../store/actions';
+import { rejectWatchAsset, acceptWatchAsset } from '../../store/actions';
 import {
   MetaMetricsEventCategory,
   MetaMetricsEventName,
@@ -23,6 +23,11 @@ import {
   AssetType,
   TokenStandard,
 } from '../../../shared/constants/transaction';
+import {
+  BUTTON_PRIMARY_SIZES,
+  ButtonPrimary,
+  ButtonSecondary,
+} from '../../components/component-library';
 
 function getTokenName(name, symbol) {
   return name === undefined ? symbol : `${name} (${symbol})`;
@@ -174,48 +179,52 @@ const ConfirmAddSuggestedToken = () => {
               </div>
             </div>
             <div className="confirm-add-suggested-token__nft-list">
-              {suggestedNfts.map(({ asset }) => {
-                return (
-                  <div
-                    className="confirm-add-suggested-token__nft-list-item"
-                    key={`${asset.address}-${asset.tokenId}`}
-                  >
-                    {asset.image && (
-                      <img
-                        className="confirm-add-suggested-token__nft-image"
-                        src={asset.image}
-                        alt={asset.name || asset.tokenId}
-                      />
-                    )}
-                    <div className="confirm-add-suggested-token__nft-details">
-                      {asset.name && (
-                        <div className="confirm-add-suggested-token__nft-name">
-                          {asset.name}
-                        </div>
+              {suggestedNfts.map(
+                ({ address, tokenId, symbol, image, name, id }) => {
+                  return (
+                    <div
+                      className="confirm-add-suggested-token__nft-list-item"
+                      key={`${address}-${tokenId}`}
+                    >
+                      {image && (
+                        <img
+                          className="confirm-add-suggested-token__nft-image"
+                          src={image}
+                          alt={name || tokenId}
+                        />
                       )}
-                      <div className="confirm-add-suggested-token__nft-address-tokenId">
-                        {asset.address} - {asset.tokenId}
-                      </div>
-                      {asset.description && (
+                      <div className="confirm-add-suggested-token__nft-details">
+                        <div className="confirm-add-suggested-token__nft-address-tokenId">
+                          {name ?? symbol} - #{tokenId}
+                        </div>
+                        <ButtonPrimary
+                          size={BUTTON_PRIMARY_SIZES.SMALL}
+                          className="confirm-add-suggested-token__nft-add-button"
+                          onClick={() => dispatch(acceptWatchAsset(id))}
+                        >
+                          {t('add')}
+                        </ButtonPrimary>
+                        {/* {asset.description && (
                         <div className="confirm-add-suggested-token__nft-description">
                           {asset.description}
                         </div>
-                      )}
-                      {asset.standard && (
+                      )} */}
+                        {/* {asset.standard && (
                         <div className="confirm-add-suggested-token__nft-standard">
                           {asset.standard}
                         </div>
-                      )}
+                      )} */}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                },
+              )}
             </div>
           </div>
         </div>
         <PageContainerFooter
           cancelText={t('cancel')}
-          submitText={t('addNft')}
+          submitText={t('addAllNfts')}
           onCancel={async () => {
             await Promise.all(
               suggestedNfts.map(({ id }) => dispatch(rejectWatchAsset(id))),
