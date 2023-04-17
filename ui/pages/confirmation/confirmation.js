@@ -38,7 +38,7 @@ import {
   Icon,
   ICON_NAMES,
 } from '../../components/component-library/icon/deprecated';
-///: BEGIN:ONLY_INCLUDE_IN(flask)
+///: BEGIN:ONLY_INCLUDE_IN(snaps)
 import SnapAuthorship from '../../components/app/snaps/snap-authorship';
 import { getSnapName } from '../../helpers/utils/util';
 ///: END:ONLY_INCLUDE_IN
@@ -338,7 +338,7 @@ export default function ConfirmationPage({
           </Box>
         ) : null}
         {
-          ///: BEGIN:ONLY_INCLUDE_IN(flask)
+          ///: BEGIN:ONLY_INCLUDE_IN(snaps)
           !isSnapDialog &&
             ///: END:ONLY_INCLUDE_IN
             pendingConfirmation.origin === 'metamask' && (
@@ -361,7 +361,7 @@ export default function ConfirmationPage({
             )
         }
         {
-          ///: BEGIN:ONLY_INCLUDE_IN(flask)
+          ///: BEGIN:ONLY_INCLUDE_IN(snaps)
           isSnapDialog && (
             <Box
               alignItems="center"
