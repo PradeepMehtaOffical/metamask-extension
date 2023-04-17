@@ -1,4 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import browser from 'webextension-polyfill';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,6 +43,7 @@ import MetafoxLogo from '../../ui/metafox-logo';
 import { getEnvironmentType } from '../../../../app/scripts/lib/util';
 import { ENVIRONMENT_TYPE_POPUP } from '../../../../shared/constants/app';
 import ConnectedStatusIndicator from '../../app/connected-status-indicator';
+import { useI18nContext } from '../../../hooks/useI18nContext';
 
 export const AppHeader = ({ onClick }) => {
   const trackEvent = useContext(MetaMetricsContext);
@@ -50,6 +52,7 @@ export const AppHeader = ({ onClick }) => {
   const origin = useSelector(getOriginOfCurrentTab);
   const history = useHistory();
   const isUnlocked = useSelector((state) => state.metamask.isUnlocked);
+  const t = useI18nContext();
 
   // Used for account picker
   const identity = useSelector(getSelectedIdentity);
@@ -89,9 +92,9 @@ export const AppHeader = ({ onClick }) => {
       ) : null}
       <Box
         display={DISPLAY.FLEX}
-        className={`multichain-app-header ${
-          !isUnlocked || popupStatus ? 'multichain-app-header-shadow' : ''
-        }`}
+        className={classnames('multichain-app-header', {
+          'multichain-app-header-shadow': !isUnlocked || popupStatus,
+        })}
         alignItems={AlignItems.center}
         width={BLOCK_SIZES.FULL}
         backgroundColor={
@@ -103,9 +106,9 @@ export const AppHeader = ({ onClick }) => {
         <>
           {isUnlocked ? (
             <Box
-              className={`multichain-app-header__contents ${
-                isUnlocked && !popupStatus ? 'multichain-app-header-shadow' : ''
-              }`}
+              className={classnames('multichain-app-header__contents', {
+                'multichain-app-header-shadow': isUnlocked && !popupStatus,
+              })}
               alignItems={AlignItems.center}
               width={BLOCK_SIZES.FULL}
               backgroundColor={BackgroundColor.backgroundDefault}
@@ -156,7 +159,7 @@ export const AppHeader = ({ onClick }) => {
                   <ButtonIcon
                     iconName={IconName.MoreVertical}
                     data-testid="account-options-menu-button"
-                    ariaLabel="NEEDS NEW TRANSLATED LABEL" // TODO: Update the label
+                    ariaLabel={t('accountOptions')}
                     onClick={() => {
                       trackEvent({
                         event: MetaMetricsEventName.NavAccountMenuOpened,
@@ -180,9 +183,9 @@ export const AppHeader = ({ onClick }) => {
           ) : (
             <Box
               display={DISPLAY.FLEX}
-              className={`multichain-app-header__lock-contents ${
-                isUnlocked && !popupStatus ? 'multichain-app-header-shadow' : ''
-              }`}
+              className={classnames('multichain-app-header__lock-contents', {
+                'multichain-app-header-shadow': isUnlocked && !popupStatus,
+              })}
               alignItems={AlignItems.center}
               width={BLOCK_SIZES.FULL}
               justifyContent={JustifyContent.spaceBetween}
