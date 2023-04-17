@@ -715,7 +715,7 @@
     "@metamask/assets-controllers>@metamask/abi-utils": {
       "packages": {
         "@metamask/assets-controllers>@metamask/abi-utils>@metamask/utils": true,
-        "@metamask/utils>superstruct": true
+        "superstruct": true
       }
     },
     "@metamask/assets-controllers>@metamask/abi-utils>@metamask/utils": {
@@ -724,10 +724,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/assets-controllers>@metamask/utils": {
@@ -736,10 +736,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/assets-controllers>abort-controller": {
@@ -781,10 +781,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/controller-utils>@spruceid/siwe-parser": {
@@ -849,7 +849,6 @@
         "@metamask/desktop>otpauth": true,
         "browserify>buffer": true,
         "browserify>events": true,
-        "browserify>process": true,
         "browserify>stream-browserify": true,
         "end-of-stream": true,
         "extension-port-stream": true,
@@ -915,10 +914,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/eth-json-rpc-infura>eth-json-rpc-middleware": {
@@ -963,10 +962,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/eth-json-rpc-provider": {
@@ -1286,10 +1285,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/key-tree>@noble/ed25519": {
@@ -1436,10 +1435,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/post-message-stream>readable-stream": {
@@ -1501,8 +1500,8 @@
         "@metamask/snaps-ui": true,
         "@metamask/snaps-utils": true,
         "@metamask/utils": true,
-        "@metamask/utils>superstruct": true,
-        "eth-rpc-errors": true
+        "eth-rpc-errors": true,
+        "superstruct": true
       }
     },
     "@metamask/rpc-methods>@metamask/browser-passworder": {
@@ -1793,7 +1792,7 @@
     "@metamask/snaps-ui": {
       "packages": {
         "@metamask/utils": true,
-        "@metamask/utils>superstruct": true
+        "superstruct": true
       }
     },
     "@metamask/snaps-utils": {
@@ -1814,15 +1813,15 @@
         "@metamask/snaps-utils>rfdc": true,
         "@metamask/snaps-utils>validate-npm-package-name": true,
         "@metamask/utils": true,
-        "@metamask/utils>superstruct": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/snaps-utils>@metamask/snaps-registry": {
       "packages": {
         "@metamask/key-tree>@noble/secp256k1": true,
         "@metamask/utils": true,
-        "@metamask/utils>superstruct": true
+        "superstruct": true
       }
     },
     "@metamask/snaps-utils>cron-parser": {
@@ -1858,10 +1857,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "@metamask/utils>@ethereumjs/tx>@chainsafe/ssz": {
@@ -3066,10 +3065,10 @@
         "TextEncoder": true
       },
       "packages": {
-        "@metamask/utils>superstruct": true,
         "browserify>buffer": true,
         "nock>debug": true,
-        "semver": true
+        "semver": true,
+        "superstruct": true
       }
     },
     "eth-ens-namehash": {
@@ -3187,7 +3186,6 @@
         "@ethersproject/abi": true,
         "bn.js": true,
         "browserify>buffer": true,
-        "browserify>process": true,
         "eth-lattice-keyring>gridplus-sdk>@ethereumjs/common": true,
         "eth-lattice-keyring>gridplus-sdk>@ethereumjs/tx": true,
         "eth-lattice-keyring>gridplus-sdk>bech32": true,
