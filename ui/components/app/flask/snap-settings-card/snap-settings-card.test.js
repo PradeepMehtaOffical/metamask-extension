@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { screen } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { renderWithProvider } from '../../../../../test/lib/render-helpers';
@@ -22,11 +23,16 @@ describe('SnapSettingsCard', () => {
     expect(getByText('Snap name')).toBeDefined();
   });
 
-  it('should render the icon fallback using the first letter of the name', () => {
+  it('should render the icon fallback using the first letter of the name', async () => {
     const { getByText } = renderWithProvider(
       <SnapSettingsCard {...args} icon="" />,
       mockStore,
     );
+
+    const avatar = await screen.findAllByText(/B/u);
+    avatar.forEach((avatarBaseElement) => {
+      expect(avatarBaseElement).toHaveClass('mm-avatar-base');
+    });
     expect(getByText('B')).toBeDefined();
   });
 
