@@ -93,7 +93,7 @@ describe('Test Snap Management', function () {
 
         // try to disable the snap
         await driver.clickElement({
-          text: 'MetaMask Notification Test Snap',
+          text: 'Notification Test Snap',
           tag: 'p',
         });
         await driver.clickElement('.toggle-button > div');
@@ -136,7 +136,7 @@ describe('Test Snap Management', function () {
 
         // try to remove snap
         await driver.clickElement({
-          text: 'Remove MetaMask Notification Test Snap',
+          text: 'Remove Notification Test Snap',
           tag: 'p',
         });
         await driver.delay(1000);

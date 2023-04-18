@@ -176,7 +176,7 @@ function ViewSnap() {
           </ButtonLink>
           {` ${t('on').toLowerCase()} ${formatDate(
             firstInstall.date,
-            'yyyy-MM-dd',
+            'dd MMM yyyy',
           )}`}
           .
         </Text>
