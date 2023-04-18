@@ -111,7 +111,7 @@ function ViewSnap() {
   }
 
   const versionHistory = snap.versionHistory ?? [];
-  const [firstInstall] = versionHistory;
+  const installInfo = versionHistory[versionHistory.length - 1];
   const packageName = snap.id && removeSnapIdPrefix(snap.id);
   const snapPrefix = snap.id && getSnapPrefix(snap.id);
   const isNPM = snapPrefix === 'npm:';
@@ -168,14 +168,14 @@ function ViewSnap() {
           {` ${t('from').toLowerCase()} `}
           <ButtonLink
             size={Size.auto}
-            href={firstInstall.origin}
+            href={installInfo.origin}
             target="_blank"
             className="view-snap__version_info__link"
           >
-            {firstInstall.origin}
+            {installInfo.origin}
           </ButtonLink>
           {` ${t('on').toLowerCase()} ${formatDate(
-            firstInstall.date,
+            installInfo.date,
             'dd MMM yyyy',
           )}`}
           .
