@@ -204,16 +204,6 @@ const ConfirmAddSuggestedToken = () => {
                         >
                           {t('add')}
                         </ButtonPrimary>
-                        {/* {asset.description && (
-                        <div className="confirm-add-suggested-token__nft-description">
-                          {asset.description}
-                        </div>
-                      )} */}
-                        {/* {asset.standard && (
-                        <div className="confirm-add-suggested-token__nft-standard">
-                          {asset.standard}
-                        </div>
-                      )} */}
                       </div>
                     </div>
                   );
