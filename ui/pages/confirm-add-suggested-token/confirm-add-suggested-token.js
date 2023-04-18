@@ -124,23 +124,32 @@ const ConfirmAddSuggestedToken = () => {
 
   const handleAddTokensClick = useCallback(async () => {
     await Promise.all(
-      [...suggestedAssets, ...suggestedNfts].map(async ({ asset, id }) => {
-        await dispatch(acceptWatchAsset(id));
+      [...suggestedAssets, ...suggestedNfts].map(
+        async ({ asset, id }, index) => {
+          const closeNotificationPopup =
+            [...suggestedAssets, ...suggestedNfts].length === index + 1;
+          await dispatch(
+            acceptWatchAsset({
+              suggestedAssetID: id,
+              closeNotificationPopup: closeNotificationPopup,
+            }),
+          );
 
-        trackEvent({
-          event: MetaMetricsEventName.TokenAdded,
-          category: MetaMetricsEventCategory.Wallet,
-          sensitiveProperties: {
-            token_symbol: asset.symbol,
-            token_contract_address: asset.address,
-            token_decimal_precision: asset.decimals,
-            unlisted: asset.unlisted,
-            source: MetaMetricsTokenEventSource.Dapp,
-            token_standard: TokenStandard.ERC20,
-            asset_type: AssetType.token,
-          },
-        });
-      }),
+          trackEvent({
+            event: MetaMetricsEventName.TokenAdded,
+            category: MetaMetricsEventCategory.Wallet,
+            sensitiveProperties: {
+              token_symbol: asset.symbol,
+              token_contract_address: asset.address,
+              token_decimal_precision: asset.decimals,
+              unlisted: asset.unlisted,
+              source: MetaMetricsTokenEventSource.Dapp,
+              token_standard: TokenStandard.ERC20,
+              asset_type: AssetType.token,
+            },
+          });
+        },
+      ),
     );
 
     history.push(mostRecentOverviewPage);
@@ -200,7 +209,18 @@ const ConfirmAddSuggestedToken = () => {
                         <ButtonPrimary
                           size={BUTTON_PRIMARY_SIZES.SMALL}
                           className="confirm-add-suggested-token__nft-add-button"
-                          onClick={() => dispatch(acceptWatchAsset(id))}
+                          onClick={(e) => {
+                            const isLastSuggestedAsset =
+                              suggestedNfts.length === 1;
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dispatch(
+                              acceptWatchAsset({
+                                suggestedAssetID: id,
+                                closeNotificationPopup: isLastSuggestedAsset,
+                              }),
+                            );
+                          }}
                         >
                           {t('add')}
                         </ButtonPrimary>

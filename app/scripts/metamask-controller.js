@@ -3445,7 +3445,7 @@ export default class MetamaskController extends EventEmitter {
       return this.tokensController.acceptWatchAssetRequest(id);
     }
     if (suggestedNft) {
-      return this.nftController.acceptWatchNft(id);
+      this.nftController.acceptWatchNft(id);
     }
   }
 
