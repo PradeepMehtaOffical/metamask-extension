@@ -11,6 +11,12 @@
     }
   }
 
+  &__enable {
+    &__tooltip_wrapper {
+      max-width: 52px;
+    }
+  }
+
   .connected-sites-list {
     &__content-row {
       border-top: none;

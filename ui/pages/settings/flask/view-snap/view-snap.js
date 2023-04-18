@@ -183,11 +183,15 @@ function ViewSnap() {
         marginRight={4}
       >
         <Text variant={TextVariant.bodyLgMedium}>{t('enableSnap')}</Text>
-        <Text variant={TextVariant.bodyMd} color={TextColor.textDefault}>
+        <Text
+          variant={TextVariant.bodyMd}
+          color={TextColor.textDefault}
+          marginBottom={4}
+        >
           {t('enableSnapDescription')}
         </Text>
-        <Box marginTop={4}>
-          <Tooltip interactive position="bottom" html={t('snapsToggle')}>
+        <Box className="view-snap__enable__tooltip_wrapper">
+          <Tooltip interactive position="left" html={t('snapsToggle')}>
             <ToggleButton
               value={snap.enabled}
               onToggle={onToggle}
