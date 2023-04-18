@@ -13,7 +13,7 @@ import {
 } from '../../../../helpers/constants/design-system';
 import Box from '../../../../components/ui/box';
 import { SNAPS_VIEW_ROUTE } from '../../../../helpers/constants/routes';
-import { getSnaps } from '../../../../selectors';
+import { getSnaps, getTargetSubjectMetadata } from '../../../../selectors';
 import { handleSettingsRefs } from '../../../../helpers/utils/settings-search';
 import {
   Icon,
@@ -26,7 +26,10 @@ import {
   ButtonLink,
   Text,
 } from '../../../../components/component-library';
-import { removeSnapIdPrefix } from '../../../../helpers/utils/util';
+import {
+  getSnapName,
+  removeSnapIdPrefix,
+} from '../../../../helpers/utils/util';
 
 const SnapListTab = () => {
   const t = useI18nContext();
@@ -41,18 +44,35 @@ const SnapListTab = () => {
     handleSettingsRefs(t, t('snaps'), settingsRef);
   }, [settingsRef, t]);
 
+  let state;
+  useSelector((defaultState) => (state = defaultState));
+
+  const snapsList = Object.entries(snaps).map(([key, snap]) => {
+    const targetSubjectMetadata = getTargetSubjectMetadata(state, snap?.id);
+
+    return {
+      key,
+      id: snap.id,
+      packageName: removeSnapIdPrefix(snap.id),
+      name: getSnapName(snap.id, targetSubjectMetadata),
+      onClick: () => {
+        onClick(snap);
+      },
+    };
+  });
+
   return (
     <div className="snap-list-tab" ref={settingsRef}>
-      {Object.entries(snaps).length ? (
+      {snapsList.length ? (
         <div className="snap-list-tab__body">
           <div className="snap-list-tab__wrapper">
-            {Object.entries(snaps).map(([key, snap]) => {
+            {snapsList.map((snap) => {
               return (
                 <SnapSettingsCard
                   className="snap-settings-card"
-                  key={key}
-                  packageName={removeSnapIdPrefix(snap.id)}
-                  name={snap.manifest.proposedName}
+                  key={snap.key}
+                  packageName={snap.packageName}
+                  name={snap.name}
                   onClick={() => {
                     onClick(snap);
                   }}

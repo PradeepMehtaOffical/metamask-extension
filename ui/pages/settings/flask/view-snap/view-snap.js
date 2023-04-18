@@ -34,7 +34,11 @@ import {
   getPermissionSubjects,
   getTargetSubjectMetadata,
 } from '../../../../selectors';
-import { formatDate, removeSnapIdPrefix } from '../../../../helpers/utils/util';
+import {
+  formatDate,
+  getSnapName,
+  removeSnapIdPrefix,
+} from '../../../../helpers/utils/util';
 import { ButtonLink, Text } from '../../../../components/component-library';
 import SnapPermissionsList from '../../../../components/app/flask/snap-permissions-list';
 
@@ -114,6 +118,7 @@ function ViewSnap() {
   const url = isNPM
     ? `https://www.npmjs.com/package/${packageName}`
     : packageName;
+  const snapName = getSnapName(snap.id, targetSubjectMetadata);
 
   return (
     <Box
@@ -244,7 +249,7 @@ function ViewSnap() {
             onClick={() => setIsShowingRemoveWarning(true)}
           >
             <Text variant={TextVariant.bodyMd} color={TextColor.errorDefault}>
-              {`${t('remove')} ${snap.manifest.proposedName}`}
+              {`${t('remove')} ${snapName}`}
             </Text>
           </Button>
           {isShowingRemoveWarning && (
@@ -253,7 +258,7 @@ function ViewSnap() {
               onSubmit={async () => {
                 await dispatch(removeSnap(snap.id));
               }}
-              snapName={snap.manifest.proposedName}
+              snapName={snapName}
             />
           )}
         </Box>
