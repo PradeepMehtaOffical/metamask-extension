@@ -45,6 +45,8 @@ describe('ViewSnap', () => {
     expect(
       getByText('An example Snap that signs messages using BLS.'),
     ).toBeDefined();
+    // Snap version info
+    expect(getByText('v5.1.2')).toBeDefined();
     // Enable Snap
     expect(getByText('Enable snap')).toBeDefined();
     expect(
