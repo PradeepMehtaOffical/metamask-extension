@@ -229,7 +229,7 @@
     "@metamask/address-book-controller": "^2.0.0",
     "@metamask/announcement-controller": "^3.0.0",
     "@metamask/approval-controller": "^2.1.0",
-    "@metamask/assets-controllers": "5.1.0-preview.7e9895d",
+    "@metamask/assets-controllers": "5.1.0-preview.ff1fe78",
     "@metamask/base-controller": "^2.0.0",
     "@metamask/contract-metadata": "^2.3.1",
     "@metamask/controller-utils": "^3.1.0",
