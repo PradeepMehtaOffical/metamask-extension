@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Popover should render popover element correctly 1`] = `
+exports[`Modal Header should render modal header correctly 1`] = `
 <div>
   <div
-    class="box mm-header-base mm-popover-header box--display-flex box--flex-direction-row box--justify-content-space-between"
-    data-testid="popover-header"
+    class="box mm-header-base mm-modal-header box--display-flex box--flex-direction-row box--justify-content-space-between"
+    data-testid="modal-header"
   >
     <div
       class="box mm-header-base__children box--flex-direction-row box--width-full"
@@ -12,7 +12,7 @@ exports[`Popover should render popover element correctly 1`] = `
       <h4
         class="box mm-text mm-text--heading-sm mm-text--text-align-center box--flex-direction-row box--color-text-default"
       >
-        Popover Header
+        Modal Header
       </h4>
     </div>
   </div>

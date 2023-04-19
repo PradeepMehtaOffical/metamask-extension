@@ -6,9 +6,9 @@ import {
   TextAlign,
 } from '../../../helpers/constants/design-system';
 import { useI18nContext } from '../../../hooks/useI18nContext';
-import { PopoverHeaderProps } from '.';
+import { ModalHeaderProps } from '.';
 
-export const PopoverHeader: React.FC<PopoverHeaderProps> = ({
+export const ModalHeader: React.FC<ModalHeaderProps> = ({
   children,
   className = '',
   startAccessory,
@@ -22,7 +22,7 @@ export const PopoverHeader: React.FC<PopoverHeaderProps> = ({
   const t = useI18nContext();
   return (
     <HeaderBase
-      className={classnames('mm-popover-header', className)}
+      className={classnames('mm-modal-header', className)}
       startAccessory={
         startAccessory ||
         (onBack && (
