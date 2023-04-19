@@ -267,4 +267,4 @@ function ViewSnap() {
   );
 }
 
-export default React.memo(ViewSnap);
+export default ViewSnap;
