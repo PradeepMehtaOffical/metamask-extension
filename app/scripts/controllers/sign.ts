@@ -33,14 +33,14 @@ import {
   AddApprovalRequest,
   RejectRequest,
 } from '@metamask/approval-controller';
+import { ApprovalType } from '@metamask/controller-utils';
 import { MetaMetricsEventCategory } from '../../../shared/constants/metametrics';
-import { MESSAGE_TYPE } from '../../../shared/constants/app';
 import PreferencesController from './preferences';
 
 const controllerName = 'SignController';
-const methodNameSign = MESSAGE_TYPE.ETH_SIGN;
-const methodNamePersonalSign = MESSAGE_TYPE.PERSONAL_SIGN;
-const methodNameTypedSign = MESSAGE_TYPE.ETH_SIGN_TYPED_DATA;
+const methodNameSign = ApprovalType.EthSign;
+const methodNamePersonalSign = ApprovalType.PersonalSign;
+const methodNameTypedSign = ApprovalType.EthSignTypedData;
 
 const stateMetadata = {
   unapprovedMsgs: { persist: false, anonymous: false },

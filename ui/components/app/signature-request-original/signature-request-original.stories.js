@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { MESSAGE_TYPE } from '../../../../shared/constants/app';
+import { ApprovalType } from '@metamask/controller-utils';
 import testData from '../../../../.storybook/test-data';
 import README from './README.mdx';
 import SignatureRequestOriginal from './signature-request-original.component';
@@ -89,7 +89,7 @@ DefaultStory.args = {
       data: MOCK_SIGN_DATA,
       origin: 'https://happydapp.website/governance?futarchy=true',
     },
-    type: MESSAGE_TYPE.PERSONAL_SIGN,
+    type: ApprovalType.PersonalSign,
   },
 };
 
@@ -103,7 +103,7 @@ ETHSignStory.args = {
       data: MOCK_SIGN_DATA,
       origin: 'https://happydapp.website/governance?futarchy=true',
     },
-    type: MESSAGE_TYPE.ETH_SIGN,
+    type: ApprovalType.EthSign,
   },
 };
 
@@ -128,6 +128,6 @@ ETHSignTypedStory.args = {
       ],
       origin: 'https://happydapp.website/governance?futarchy=true',
     },
-    type: MESSAGE_TYPE.ETH_SIGN_TYPED_DATA,
+    type: ApprovalType.EthSignTypedData,
   },
 };

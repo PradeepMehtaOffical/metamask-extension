@@ -3,7 +3,7 @@ import { ObservableStore } from '@metamask/obs-store';
 import { bufferToHex } from 'ethereumjs-util';
 import { ethErrors } from 'eth-rpc-errors';
 import log from 'loglevel';
-import { MESSAGE_TYPE } from '../../../shared/constants/app';
+import { ApprovalType } from '@metamask/controller-utils';
 import { MetaMetricsEventCategory } from '../../../shared/constants/metametrics';
 import { METAMASK_CONTROLLER_EVENTS } from '../metamask-controller';
 import createId from '../../../shared/modules/random-id';
@@ -149,7 +149,7 @@ export default class DecryptMessageManager extends EventEmitter {
       msgParams,
       time,
       status: 'unapproved',
-      type: MESSAGE_TYPE.ETH_DECRYPT,
+      type: ApprovalType.EthDecrypt,
     };
     this.addMsg(msgData);
 

@@ -7,6 +7,7 @@ import {
   AbstractMessage,
   OriginalRequest,
 } from '@metamask/message-manager/dist/AbstractMessageManager';
+import { ApprovalType } from '@metamask/controller-utils';
 import { MetaMetricsEventCategory } from '../../../shared/constants/metametrics';
 import SignController, {
   SignControllerMessenger,
@@ -502,9 +503,17 @@ describe('SignController', () => {
     });
 
     it.each([
-      ['message manager', messageManagerMock, 'eth_sign'],
-      ['personal message manager', personalMessageManagerMock, 'personal_sign'],
-      ['typed message manager', typedMessageManagerMock, 'eth_signTypedData'],
+      ['message manager', messageManagerMock, ApprovalType.EthSign],
+      [
+        'personal message manager',
+        personalMessageManagerMock,
+        ApprovalType.PersonalSign,
+      ],
+      [
+        'typed message manager',
+        typedMessageManagerMock,
+        ApprovalType.EthSignTypedData,
+      ],
     ])(
       'requires approval on unapproved message event from %s',
       (_, messageManager, methodName) => {

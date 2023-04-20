@@ -1,5 +1,5 @@
+import { ApprovalType } from '@metamask/controller-utils';
 import { mapToTemplate } from '../../../../../components/app/flask/snap-ui-renderer';
-import { MESSAGE_TYPE } from '../../../../../../shared/constants/app';
 import { DelineatorType } from '../../../../../helpers/constants/flask';
 
 function getValues(pendingApproval, t, actions, _history, setInputState) {
@@ -39,7 +39,7 @@ function getValues(pendingApproval, t, actions, _history, setInputState) {
                   max: 300,
                   onChange: (event) => {
                     const inputValue = event.target.value ?? '';
-                    setInputState(MESSAGE_TYPE.SNAP_DIALOG_PROMPT, inputValue);
+                    setInputState(ApprovalType.SnapDialogPrompt, inputValue);
                   },
                   theme: 'bordered',
                 },

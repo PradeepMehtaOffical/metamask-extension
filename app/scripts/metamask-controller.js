@@ -53,6 +53,7 @@ import { RateLimitController } from '@metamask/rate-limit-controller';
 import { NotificationController } from '@metamask/notification-controller';
 ///: END:ONLY_INCLUDE_IN
 import SmartTransactionsController from '@metamask/smart-transactions-controller';
+import { ApprovalType } from '@metamask/controller-utils';
 ///: BEGIN:ONLY_INCLUDE_IN(flask)
 import {
   CronjobController,
@@ -97,7 +98,6 @@ import {
 import { MILLISECOND, SECOND } from '../../shared/constants/time';
 import {
   ORIGIN_METAMASK,
-  MESSAGE_TYPE,
   ///: BEGIN:ONLY_INCLUDE_IN(flask)
   SNAP_DIALOG_TYPES,
   ///: END:ONLY_INCLUDE_IN
@@ -261,9 +261,9 @@ export default class MetamaskController extends EventEmitter {
       }),
       showApprovalRequest: opts.showUserConfirmation,
       typesExcludedFromRateLimiting: [
-        MESSAGE_TYPE.ETH_SIGN,
-        MESSAGE_TYPE.PERSONAL_SIGN,
-        MESSAGE_TYPE.ETH_SIGN_TYPED_DATA,
+        ApprovalType.EthSign,
+        ApprovalType.PersonalSign,
+        ApprovalType.EthSignTypedData,
       ],
     });
 
