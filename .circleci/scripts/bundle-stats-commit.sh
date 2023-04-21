@@ -12,7 +12,8 @@ fi
 
 if [[ "${CIRCLECI:-}" != 'true' ]]
 then
-    printf '%s\n' 'CIRCLECI environment variable must be set to true'
+    printf 'This is not develop branch\n'
+
     exit 1
 fi
 
