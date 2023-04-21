@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { ObjectInspector } from 'react-inspector';
-import { ApprovalType } from '@metamask/controller-utils';
 import LedgerInstructionField from '../ledger-instruction-field';
 
 import { getURLHostName, sanitizeString } from '../../../helpers/utils/util';
@@ -26,6 +25,7 @@ import SecurityProviderBannerMessage from '../security-provider-banner-message/s
 import { SECURITY_PROVIDER_MESSAGE_SEVERITIES } from '../security-provider-banner-message/security-provider-banner-message.constants';
 import { formatCurrency } from '../../../helpers/utils/confirm-tx.util';
 import { getValueFromWeiHex } from '../../../../shared/modules/conversion.utils';
+import { MESSAGE_TYPE } from '../../../../shared/constants/app';
 import SignatureRequestOriginalWarning from './signature-request-original-warning';
 
 export default class SignatureRequestOriginal extends Component {
@@ -127,13 +127,13 @@ export default class SignatureRequestOriginal extends Component {
       msgParams: { data },
     } = txData;
 
-    if (type === ApprovalType.PersonalSign) {
+    if (type === MESSAGE_TYPE.PERSONAL_SIGN) {
       rows = [
         { name: this.context.t('message'), value: this.msgHexToText(data) },
       ];
-    } else if (type === ApprovalType.EthSignTypedData) {
+    } else if (type === MESSAGE_TYPE.ETH_SIGN_TYPED_DATA) {
       rows = data;
-    } else if (type === ApprovalType.EthSign) {
+    } else if (type === MESSAGE_TYPE.ETH_SIGN) {
       rows = [{ name: this.context.t('message'), value: data }];
     }
 
@@ -249,7 +249,7 @@ export default class SignatureRequestOriginal extends Component {
           history.push(mostRecentOverviewPage);
         }}
         onSubmit={async (event) => {
-          if (type === ApprovalType.EthSign) {
+          if (type === MESSAGE_TYPE.ETH_SIGN) {
             this.setState({ showSignatureRequestWarning: true });
           } else {
             await sign(event);

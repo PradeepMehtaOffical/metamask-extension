@@ -264,6 +264,10 @@ export default class MetamaskController extends EventEmitter {
         ApprovalType.EthSign,
         ApprovalType.PersonalSign,
         ApprovalType.EthSignTypedData,
+        ApprovalType.Transaction,
+        ApprovalType.WatchAsset,
+        ApprovalType.EthGetEncryptionPublicKey,
+        ApprovalType.EthDecrypt,
       ],
     });
 
